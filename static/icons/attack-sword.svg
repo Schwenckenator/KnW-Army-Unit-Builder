@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="60"
+   height="130"
+   viewBox="0 0 15.875 34.395834"
+   version="1.1"
+   id="svg1506"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="attack-sword.svg">
+  <defs
+     id="defs1500" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="15.429487"
+     inkscape:cy="58.747695"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1503">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-262.60415)">
+    <path
+       inkscape:connector-curvature="0"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.43723589;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 6.2776088,295.61523 c 0.4354303,0.33524 1.1305413,0.55266 1.9133367,0.55266 1.3184759,-3e-5 2.3879625,-0.6151 2.3879625,-1.37445 -8.6e-5,-0.56626 -0.5939956,-1.05409 -1.4427938,-1.26486 0.6024176,-1.63794 0.6740136,-3.53839 0.2141876,-5.2385 1.8626552,-0.19088 3.6644722,-0.86863 5.0919052,-2.03448 l -0.810913,-0.66231 c -1.254037,1.02422 -2.8336,1.61771 -4.4639354,1.7786 l 1.6163194,-1.47293 c -0.545485,-8.54518 -1.4110739,-16.88187 -2.5925578,-22.57768 -1.2910939,5.69999 -2.0675542,14.2338 -2.5913837,22.57878 l 1.5988302,1.45639 c -1.5813862,-0.18018 -3.1070986,-0.76803 -4.3257695,-1.76316 l -0.8109574,0.66235 c 1.3973138,1.1411 3.1533134,1.81525 4.9737897,2.02236 -0.4637323,1.70393 -0.3944359,3.6103 0.2101918,5.25281 -0.8480144,0.21098 -1.4414486,0.69559 -1.4414486,1.2615 3.4e-6,0.30848 0.1753523,0.59345 0.4732395,0.82285 z"
+       id="path2" />
+  </g>
+</svg>
