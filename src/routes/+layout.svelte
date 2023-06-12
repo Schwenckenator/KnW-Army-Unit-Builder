@@ -1,7 +1,8 @@
-<header>
-	<a href="/">Card</a>
-	<a href="/ancestries">Ancestries</a>
-</header>
+<script>
+	import Header from '../components/Header.svelte';
+</script>
+
+<Header />
 <main>
 	<slot />
 </main>
@@ -26,12 +27,5 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-	header {
-		width: 100%;
-		display: flex;
-		margin-top: 30px;
-		justify-content: center;
-		gap: 10px;
 	}
 </style>

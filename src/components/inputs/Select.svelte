@@ -1,6 +1,10 @@
+<script context="module" lang="ts">
+	export type ISelectOption = { name: string; value: any };
+</script>
+
 <script lang="ts">
 	export let label: string;
-	export let options: { name: string; value: any }[];
+	export let options: ISelectOption[];
 	export let value: any;
 </script>
 

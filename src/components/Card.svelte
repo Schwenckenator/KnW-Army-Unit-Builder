@@ -2,10 +2,12 @@
 	import { card } from '../stores/cardStore';
 	import { ancestries, ancestriesMap } from '../stores/ancestriesStore';
 	import { iconMap } from '../utils/iconMap';
+	import { experienceMap } from '../stores/experienceStore';
 
 	// TODO make a map and use it for ancestries
 
 	$: ancestry = $ancestriesMap[$card.ancestry];
+	$: experience = $experienceMap[$card.experience];
 
 	$: backgroundStyle = `background-image: linear-gradient(${ancestry.colour.top} 0%, ${ancestry.colour.bottom} 100%);`;
 	$: displayAttack = addPlusIfPositve($card.attack);
@@ -13,7 +15,7 @@
 	$: displayMorale = addPlusIfPositve($card.morale);
 	$: displayCommand = addPlusIfPositve($card.morale);
 
-	$: console.log(ancestry);
+	// $: console.log(ancestry);
 
 	function addPlusIfPositve(value: string) {
 		return value !== '' && Number(value) >= 0 ? `+${value}` : value;
@@ -102,9 +104,9 @@
 			<img id="type-img" src={$card.unitType.icon} alt="" />
 		</div>
 		<div class="stars">
-			<img class="is-hidden" id="star-0" src="icons/star.svg" alt="" />
-			<img class="is-hidden" id="star-1" src="icons/star.svg" alt="" />
-			<img class="is-hidden" id="star-2" src="icons/star.svg" alt="" />
+			<img class:is-hidden={experience.starsNum < 1} id="star-0" src="icons/star.svg" alt="" />
+			<img class:is-hidden={experience.starsNum < 2} id="star-1" src="icons/star.svg" alt="" />
+			<img class:is-hidden={experience.starsNum < 3} id="star-2" src="icons/star.svg" alt="" />
 		</div>
 
 		<div class="sidebar">
@@ -113,9 +115,9 @@
 				SIZE
 			</div>
 			<div class="details">
-				<input name="exp" type="text" title="Experience" bind:value={$card.experience.name} />
+				<input name="exp" type="text" title="Experience" bind:value={experience.name} />
 				<input name="equip" title="Equipment" type="text" bind:value={$card.equipment.name} />
-				<input name="ancestry" title="Ancestry" type="text" value={ancestry?.name} />
+				<input name="ancestry" title="Ancestry" type="text" value={ancestry.name} />
 				<input name="type" title="Unit Type" type="text" bind:value={$card.unitType.name} />
 			</div>
 		</div>

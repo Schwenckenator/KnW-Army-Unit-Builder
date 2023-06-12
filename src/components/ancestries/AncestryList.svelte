@@ -2,7 +2,7 @@
 	import { ancestries } from '../../stores/ancestriesStore';
 	import AncestryItem from './AncestryItem.svelte';
 
-	$: console.log($ancestries);
+	// $: console.log($ancestries);
 
 	function handleDelete(event: CustomEvent<{ id: string }>) {
 		ancestries.delete(event.detail.id);
