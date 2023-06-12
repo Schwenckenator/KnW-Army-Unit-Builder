@@ -1,14 +1,22 @@
 import { writable } from 'svelte/store';
 
-export type unitStats = {
+export type IUnitStats = {
     unitName: string
     commander: string
     traits: string[]
     size: string
     ancestry: string
-    unitType: string
-    equipment: string
-    experience: string
+    unitType: {
+        name: string,
+        icon: string,
+    }
+    equipment: {
+        name: string,
+    }
+    experience: {
+        name: string,
+        stars: number,
+    }
     attacksNo: string
     damage: string
     attack: string
@@ -20,15 +28,23 @@ export type unitStats = {
     tier: string
 }
 
-const initCard = {
+const initCard: IUnitStats = {
     unitName: "",
     commander: "",
     traits: ["", "", "", ""],
     size: "6",
     ancestry: "",
-    unitType: "",
-    equipment: "",
-    experience: "",
+    unitType: {
+        name: "",
+        icon: "",
+    },
+    equipment: {
+        name: "",
+    },
+    experience: {
+        name: "",
+        stars: 0,
+    },
     attacksNo: "1",
     damage: "1",
     attack: "",
@@ -40,4 +56,10 @@ const initCard = {
     tier: "",
 }
 
-export const card = writable(initCard);
+// export const card = writable(initCard);
+const local = localStorage.getItem('card')
+const loaded = local ? JSON.parse(local) : initCard
+
+export const card = writable<IUnitStats>(loaded)
+
+card.subscribe((value) => localStorage.card = JSON.stringify(value))

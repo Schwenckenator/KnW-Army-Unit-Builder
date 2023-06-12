@@ -1,50 +1,22 @@
-<script>
+<script lang="ts">
 	import { card } from '../stores/cardStore';
+	import { ancestries, ancestriesMap } from '../stores/ancestriesStore';
+	import { iconMap } from '../utils/iconMap';
 
-	function checkStore() {
-		console.log($card);
-	}
+	// TODO make a map and use it for ancestries
 
-	function loadFile(event) {
-		const id = event.target.id;
-		const image = document.getElementById(`${id}-img`);
+	$: ancestry = $ancestriesMap[$card.ancestry];
 
-		image.src = URL.createObjectURL(event.target.files[0]);
-	}
+	$: backgroundStyle = `background-image: linear-gradient(${ancestry.colour.top} 0%, ${ancestry.colour.bottom} 100%);`;
+	$: displayAttack = addPlusIfPositve($card.attack);
+	$: displayPower = addPlusIfPositve($card.power);
+	$: displayMorale = addPlusIfPositve($card.morale);
+	$: displayCommand = addPlusIfPositve($card.morale);
 
-	function setColour(event) {
-		const background = document.getElementById(`background`);
-		const topColour = document.getElementById(`top-colour`);
-		const bottomColour = document.getElementById(`bottom-colour`);
+	$: console.log(ancestry);
 
-		background.style = `background-image: linear-gradient(${topColour.value} 0%, ${bottomColour.value} 100%);`;
-	}
-
-	function setStars(event) {
-		const starNum = event.target.value;
-		const stars = [
-			document.getElementById('star-0'),
-			document.getElementById('star-1'),
-			document.getElementById('star-2'),
-		];
-
-		if (starNum == 0) {
-			stars[0].classList.add('is-hidden');
-			stars[1].classList.add('is-hidden');
-			stars[2].classList.add('is-hidden');
-		} else if (starNum == 1) {
-			stars[0].classList.add('is-hidden');
-			stars[1].classList.add('is-hidden');
-			stars[2].classList.remove('is-hidden');
-		} else if (starNum == 2) {
-			stars[0].classList.add('is-hidden');
-			stars[1].classList.remove('is-hidden');
-			stars[2].classList.remove('is-hidden');
-		} else if (starNum == 3) {
-			stars[0].classList.remove('is-hidden');
-			stars[1].classList.remove('is-hidden');
-			stars[2].classList.remove('is-hidden');
-		}
+	function addPlusIfPositve(value: string) {
+		return value !== '' && Number(value) >= 0 ? `+${value}` : value;
 	}
 </script>
 
@@ -73,7 +45,7 @@
 		<div class="image">
 			<img id="bg-img" src="" alt="" />
 		</div>
-		<div id="background" class="background" />
+		<div id="background" class="background" style={backgroundStyle} />
 		<div class="traits">
 			<div class="traits-title">TRAITS</div>
 			<div class="item">
@@ -125,9 +97,9 @@
 			</div>
 		</div>
 		<div class="symbols">
-			<img id="anc-img" src="" alt="" />
+			<img id="anc-img" src={iconMap[ancestry.icon].src} alt="" />
 
-			<img id="type-img" src="" alt="" />
+			<img id="type-img" src={$card.unitType.icon} alt="" />
 		</div>
 		<div class="stars">
 			<img class="is-hidden" id="star-0" src="icons/star.svg" alt="" />
@@ -141,10 +113,10 @@
 				SIZE
 			</div>
 			<div class="details">
-				<input name="exp" type="text" title="Experience" bind:value={$card.experience} />
-				<input name="equip" title="Equipment" type="text" bind:value={$card.equipment} />
-				<input name="ancestry" title="Ancestry" type="text" bind:value={$card.ancestry} />
-				<input name="type" title="Unit Type" type="text" bind:value={$card.unitType} />
+				<input name="exp" type="text" title="Experience" bind:value={$card.experience.name} />
+				<input name="equip" title="Equipment" type="text" bind:value={$card.equipment.name} />
+				<input name="ancestry" title="Ancestry" type="text" value={ancestry?.name} />
+				<input name="type" title="Unit Type" type="text" bind:value={$card.unitType.name} />
 			</div>
 		</div>
 		<div class="tier">
@@ -153,13 +125,13 @@
 		<input name="tier" class="tier" type="text" bind:value={$card.tier} />
 		<table class="stat-table">
 			<tr>
-				<td><input name="ATK" id="ATK" class="num" type="text" bind:value={$card.attack} /></td>
-				<td><input name="DEF" class="num" type="text" bind:value={$card.defence} /></td>
-				<td><input name="POW" class="num" type="text" bind:value={$card.power} /></td>
+				<td><div class="num">{displayAttack}</div></td>
+				<td><div class="num">{$card.defence}</div></td>
+				<td><div class="num">{displayPower}</div></td>
 				<td>&nbsp;</td>
-				<td><input name="TOU" class="num" type="text" bind:value={$card.toughness} /></td>
-				<td><input name="MOR" class="num" type="text" bind:value={$card.morale} /></td>
-				<td><input name="COM" class="num" type="text" bind:value={$card.command} /></td>
+				<td><div class="num">{$card.toughness}</div></td>
+				<td><div class="num">{displayMorale}</div></td>
+				<td><div class="num">{displayCommand}</div></td>
 			</tr>
 			<tr class="stat">
 				<td>ATK</td>
@@ -171,60 +143,6 @@
 				<td>COM</td>
 			</tr>
 		</table>
-	</div>
-	<div class="image-upload">
-		<div>
-			<label
-				>Background Image:
-				<input
-					type="file"
-					id="bg"
-					accept="image/gif, image/jpeg, image/png, image/svg+xml"
-					on:change={loadFile}
-				/></label
-			>
-		</div>
-		<div>
-			<label
-				>Background Colours:
-				<input id="top-colour" type="color" on:change={setColour} />
-				<input id="bottom-colour" type="color" on:change={setColour} />
-			</label>
-		</div>
-		<div>
-			<label
-				>Ancestry Image:
-				<input
-					type="file"
-					id="anc"
-					accept="image/gif, image/jpeg, image/png, image/svg+xml"
-					on:change={loadFile}
-				/>
-			</label>
-		</div>
-		<div>
-			<label
-				>Unit Type Image:
-				<input
-					type="file"
-					id="type"
-					accept="image/gif, image/jpeg, image/png, image/svg+xml"
-					on:change={loadFile}
-				/>
-			</label>
-		</div>
-		<div>
-			<label
-				>Number of Stars: (Experience)
-				<select on:change={setStars}>
-					<option value="0">0</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-				</select>
-			</label>
-		</div>
-		<button on:click={checkStore}>Check Store</button>
 	</div>
 </section>
 
