@@ -10,9 +10,7 @@ export type IUnitStats = {
         name: string,
         icon: string,
     }
-    equipment: {
-        name: string,
-    }
+    equipment: string
     experience: string
     attacksNo: string
     damage: string
@@ -35,9 +33,7 @@ const initCard: IUnitStats = {
         name: "",
         icon: "",
     },
-    equipment: {
-        name: "",
-    },
+    equipment: "",
     experience: "",
     attacksNo: "1",
     damage: "1",

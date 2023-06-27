@@ -1,13 +1,33 @@
 <script lang="ts">
 	import { card } from '../stores/cardStore';
-	import { ancestries, ancestriesMap } from '../stores/ancestriesStore';
+	import { ancestriesMap, type IAncestry } from '../stores/ancestriesStore';
 	import { iconMap } from '../utils/iconMap';
-	import { experienceMap } from '../stores/experienceStore';
+	import { experienceMap, type IExperience } from '../stores/experienceStore';
+	import { equipmentMap, type IEquipment } from '../stores/equipmentStore';
 
 	// TODO make a map and use it for ancestries
 
-	$: ancestry = $ancestriesMap[$card.ancestry];
-	$: experience = $experienceMap[$card.experience];
+	const sideTextOverflowLength = 9;
+	let ancestry: IAncestry, isAncestrySmall: boolean;
+	let experience: IExperience, isExperienceSmall: boolean;
+	let equipment: IEquipment, isEquipmentSmall: boolean;
+	let isUnitTypeSmall: boolean;
+
+	$: {
+		ancestry = $ancestriesMap[$card.ancestry];
+		isAncestrySmall = isTextOverflow(ancestry.name);
+	}
+	$: {
+		experience = $experienceMap[$card.experience];
+		isExperienceSmall = isTextOverflow(experience.name);
+	}
+	$: {
+		equipment = $equipmentMap[$card.equipment];
+		isEquipmentSmall = isTextOverflow(equipment.name);
+	}
+	$: {
+		isUnitTypeSmall = isTextOverflow($card.unitType.name);
+	}
 
 	$: backgroundStyle = `background-image: linear-gradient(${ancestry.colour.top} 0%, ${ancestry.colour.bottom} 100%);`;
 	$: displayAttack = addPlusIfPositve($card.attack);
@@ -19,6 +39,9 @@
 
 	function addPlusIfPositve(value: string) {
 		return value !== '' && Number(value) >= 0 ? `+${value}` : value;
+	}
+	function isTextOverflow(text: string) {
+		return text.length > sideTextOverflowLength;
 	}
 </script>
 
@@ -115,10 +138,46 @@
 				SIZE
 			</div>
 			<div class="details">
-				<input name="exp" type="text" title="Experience" bind:value={experience.name} />
-				<input name="equip" title="Equipment" type="text" bind:value={$card.equipment.name} />
-				<input name="ancestry" title="Ancestry" type="text" value={ancestry.name} />
-				<input name="type" title="Unit Type" type="text" bind:value={$card.unitType.name} />
+				<span class:small={isExperienceSmall}>
+					{experience.name}
+				</span>
+				<span class:small={isEquipmentSmall}>
+					{equipment.name}
+				</span>
+				<span class:small={isAncestrySmall}>
+					{ancestry.name}
+				</span>
+				<span class:small={isUnitTypeSmall}>
+					{$card.unitType.name}
+				</span>
+				<!-- <input
+					class:small={isExperienceSmall}
+					name="exp"
+					type="text"
+					title="Experience"
+					value={experience.name}
+				/>
+				<input
+					class:small={isEquipmentSmall}
+					name="equip"
+					title="Equipment"
+					type="text"
+					value={equipment.name}
+				/>
+				<input
+					class:small={isAncestrySmall}
+					name="ancestry"
+					title="Ancestry"
+					type="text"
+					value={ancestry.name}
+				/>
+				<input
+					class:small={isUnitTypeSmall}
+					name="type"
+					title="Unit Type"
+					type="text"
+					value={$card.unitType.name}
+				/> -->
 			</div>
 		</div>
 		<div class="tier">
@@ -262,13 +321,20 @@
 	.details {
 		position: absolute;
 		bottom: 90px;
+		width: 100%;
 	}
 
-	.sidebar > .details > input {
-		width: 90%;
+	.sidebar > .details > span {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		margin: 0 5px;
-		font-size: x-large;
-		text-align: center;
+		font-size: 1.5rem;
+		height: 1.75rem;
+		max-lines: 1;
+	}
+	.sidebar > .details > span.small {
+		font-size: 1.1rem;
 	}
 
 	.size-circle {

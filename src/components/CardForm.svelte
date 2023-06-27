@@ -4,27 +4,18 @@
 	import TextInput from './inputs/TextInput.svelte';
 	import AncestrySelect from './ancestries/AncestrySelect.svelte';
 	import ExperienceSelect from './experience/ExperienceSelect.svelte';
+	import { equipment } from '../stores/equipmentStore';
 
-	const equipmentList = [
-		{ name: 'Light', value: { name: 'Light' } },
-		{ name: 'Medium', value: { name: 'Medium' } },
-		{ name: 'Heavy', value: { name: 'Heavy' } },
-		{ name: 'Super-Heavy', value: { name: 'Super-Heavy' } },
-	];
-
-	// const experienceList = [
-	// 	{ name: 'Levies', value: { name: 'Levies', stars: 0 } },
-	// 	{ name: 'Regular', value: { name: 'Regular', stars: 0 } },
-	// 	{ name: 'Veteran', value: { name: 'Veteran', stars: 1 } },
-	// 	{ name: 'Elite', value: { name: 'Elite', stars: 2 } },
-	// 	{ name: 'Super-Elite', value: { name: 'Super-Elite', stars: 3 } },
-	// ];
+	const equipmentList = $equipment.map((equip) => ({
+		name: equip.name,
+		value: equip.id,
+	}));
 
 	const unitTypeList = [
 		{ name: 'Levies', value: { name: 'Infantry', icon: 'icons/levies.svg' } },
 		{ name: 'Infantry', value: { name: 'Infantry', icon: 'icons/infantry.svg' } },
 		{ name: 'Artillery', value: { name: 'Artillery', icon: 'icons/artillery.svg' } },
-		{ name: 'Siege Engine', value: { name: 'Siege Engine', icon: 'icons/siege-weapon.svg' } },
+		{ name: 'Siege Engine', value: { name: 'Artillery', icon: 'icons/siege-weapon.svg' } },
 		{ name: 'Cavalry', value: { name: 'Cavalry', icon: 'icons/cavalry.svg' } },
 		{ name: 'Aerial', value: { name: 'Aerial', icon: 'icons/infantry.svg' } },
 	];
