@@ -13,5 +13,6 @@
 <style>
 	input {
 		border: solid black 1px;
+		font-size: medium;
 	}
 </style>

@@ -10,7 +10,7 @@ export type IExperienceMap = {
     [key: string]: IExperience
 }
 
-const initExperience: IExperience = {
+export const initExperience: IExperience = {
     id: generateId(),
     name: "",
     starsNum: 0,

@@ -22,8 +22,12 @@
 		border: none;
 		font-family: Georgia, 'Times New Roman', Times, serif;
 	}
+	:global(.hbox) {
+		display: flex;
+		gap: 5px;
+	}
 	main {
-		height: 100%;
+		height: calc(100% - 50px);
 		display: flex;
 		align-items: center;
 		justify-content: center;

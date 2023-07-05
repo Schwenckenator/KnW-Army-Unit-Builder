@@ -21,7 +21,7 @@ export function createListStore<T extends IListObject>(key: string, initValue: T
     }
 }
 
-function generateId() {
+export function generateId() {
     return Math.random().toString(36).slice(2)
 }
 

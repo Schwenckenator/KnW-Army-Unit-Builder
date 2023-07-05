@@ -10,7 +10,7 @@ export type IEquipmentMap = {
     [id: string]: IEquipment
 }
 
-const initEquipment = {
+export const initEquipment = {
     id: '',
     name: '',
 }

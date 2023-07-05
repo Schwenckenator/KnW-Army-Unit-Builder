@@ -1,12 +1,12 @@
 import { writable, derived, type Readable } from 'svelte/store';
 
 export type IAncestry = {
-    id: string,
-    name: string,
-    icon: string,
+    id: string
+    name: string
+    icon: string
     colour: {
-        top: string,
-        bottom: string,
+        top: string
+        bottom: string
     }
 }
 
@@ -14,13 +14,13 @@ export type IAncestryMap = {
     [key: string]: IAncestry
 }
 
-const initAncestry: IAncestry = {
+export const initAncestry: IAncestry = {
     id: generateId(),
     name: "",
     icon: "",
     colour: {
-        top: "#fff",
-        bottom: "#fff"
+        top: "#ffffff",
+        bottom: "#ffffff"
     }
 }
 

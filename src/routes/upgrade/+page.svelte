@@ -1,60 +1,57 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
-	import { bonuses, initEquipmentBonus, initExperienceBonus } from '../../stores/bonusesStore';
-	import { experienceLevels, experienceMap } from '../../stores/experienceStore';
+	import {
+		bonuses,
+		initEquipmentBonus,
+		initExperienceBonus,
+		type IExperienceBonusMap,
+		type IEquipmentBonusMap,
+	} from '../../stores/bonusesStore';
+	import { experienceLevels } from '../../stores/experienceStore';
 	import ExperienceUpgradeTable from './ExperienceUpgradeTable.svelte';
-	import { equipment, equipmentMap } from '../../stores/equipmentStore';
+	import { equipment } from '../../stores/equipmentStore';
 	import EquipmentUpgradeTable from './EquipmentUpgradeTable.svelte';
 
-	console.log('on upgrade page');
+	console.log('On upgrade page');
+	// Add an entry for each experience type
+	const newExperienceBonuses: IExperienceBonusMap = {
+		infantry: {},
+		cavalry: {},
+		artillery: {},
+	};
+	for (let exp of $experienceLevels) {
+		newExperienceBonuses.artillery[exp.id] = $bonuses.experience.artillery[exp.id] ?? {
+			...initExperienceBonus,
+		};
+		newExperienceBonuses.cavalry[exp.id] = $bonuses.experience.cavalry[exp.id] ?? {
+			...initExperienceBonus,
+		};
+		newExperienceBonuses.infantry[exp.id] = $bonuses.experience.infantry[exp.id] ?? {
+			...initExperienceBonus,
+		};
+	}
 
-	onMount(() => {
-		// Add an entry for each experience type
-		for (let exp of $experienceLevels) {
-			$bonuses.experience.artillery[exp.id] = $bonuses.experience.artillery[exp.id] ?? {
-				...initExperienceBonus,
-			};
-			$bonuses.experience.cavalry[exp.id] = $bonuses.experience.cavalry[exp.id] ?? {
-				...initExperienceBonus,
-			};
-			$bonuses.experience.infantry[exp.id] = $bonuses.experience.infantry[exp.id] ?? {
-				...initExperienceBonus,
-			};
-		}
+	$bonuses.experience = newExperienceBonuses;
 
-		// Delete removed bonuses
-		for (let exp of Object.keys($bonuses.experience.infantry)) {
-			// TODO: Broken
-			if (!$experienceMap.hasOwnProperty(exp)) {
-				delete $bonuses.experience.artillery[exp];
-				delete $bonuses.experience.cavalry[exp];
-				delete $bonuses.experience.infantry[exp];
-			}
-		}
+	const newEquipmentBonuses: IEquipmentBonusMap = {
+		infantry: {},
+		cavalry: {},
+		artillery: {},
+	};
+	// Add an entry for each equipment type
+	for (let equip of $equipment) {
+		newEquipmentBonuses.artillery[equip.id] = $bonuses.equipment.artillery[equip.id] ?? {
+			...initEquipmentBonus,
+		};
+		newEquipmentBonuses.cavalry[equip.id] = $bonuses.equipment.cavalry[equip.id] ?? {
+			...initEquipmentBonus,
+		};
+		newEquipmentBonuses.infantry[equip.id] = $bonuses.equipment.infantry[equip.id] ?? {
+			...initEquipmentBonus,
+		};
+	}
 
-		// Add an entry for each equipment type
-		for (let equip of $equipment) {
-			$bonuses.equipment.artillery[equip.id] = $bonuses.equipment.artillery[equip.id] ?? {
-				...initEquipmentBonus,
-			};
-			$bonuses.equipment.cavalry[equip.id] = $bonuses.equipment.cavalry[equip.id] ?? {
-				...initEquipmentBonus,
-			};
-			$bonuses.equipment.infantry[equip.id] = $bonuses.equipment.infantry[equip.id] ?? {
-				...initEquipmentBonus,
-			};
-		}
-
-		// Delete removed bonuses
-		for (let equip of Object.keys($bonuses.equipment.infantry)) {
-			// TODO: Broken
-			if (!$equipmentMap.hasOwnProperty(equip)) {
-				delete $bonuses.equipment.artillery[equip];
-				delete $bonuses.equipment.cavalry[equip];
-				delete $bonuses.equipment.infantry[equip];
-			}
-		}
-	});
+	$bonuses.equipment = newEquipmentBonuses;
 </script>
 
 <section>

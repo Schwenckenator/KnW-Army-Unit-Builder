@@ -1,39 +1,39 @@
 <script lang="ts">
 	import { card } from '../stores/cardStore';
-	import { ancestriesMap, type IAncestry } from '../stores/ancestriesStore';
+	import { ancestriesMap, initAncestry, type IAncestry } from '../stores/ancestriesStore';
 	import { iconMap } from '../utils/iconMap';
-	import { experienceMap, type IExperience } from '../stores/experienceStore';
-	import { equipmentMap, type IEquipment } from '../stores/equipmentStore';
-
-	// TODO make a map and use it for ancestries
+	import { experienceMap, initExperience, type IExperience } from '../stores/experienceStore';
+	import { equipmentMap, initEquipment, type IEquipment } from '../stores/equipmentStore';
+	import { unitTypeMap, type IUnitType, emptyUnitType } from '../stores/unitTypeStore';
 
 	const sideTextOverflowLength = 9;
 	let ancestry: IAncestry, isAncestrySmall: boolean;
 	let experience: IExperience, isExperienceSmall: boolean;
 	let equipment: IEquipment, isEquipmentSmall: boolean;
-	let isUnitTypeSmall: boolean;
+	let unitType: IUnitType, isUnitTypeSmall: boolean;
 
 	$: {
-		ancestry = $ancestriesMap[$card.ancestry];
+		ancestry = $ancestriesMap[$card.ancestry] ?? { ...initAncestry };
 		isAncestrySmall = isTextOverflow(ancestry.name);
 	}
 	$: {
-		experience = $experienceMap[$card.experience];
+		experience = $experienceMap[$card.experience] ?? { ...initExperience };
 		isExperienceSmall = isTextOverflow(experience.name);
 	}
 	$: {
-		equipment = $equipmentMap[$card.equipment];
+		equipment = $equipmentMap[$card.equipment] ?? { ...initEquipment };
 		isEquipmentSmall = isTextOverflow(equipment.name);
 	}
 	$: {
-		isUnitTypeSmall = isTextOverflow($card.unitType.name);
+		unitType = $unitTypeMap[$card.unitType] ?? { ...emptyUnitType };
+		isUnitTypeSmall = isTextOverflow(unitType.displayName);
 	}
 
 	$: backgroundStyle = `background-image: linear-gradient(${ancestry.colour.top} 0%, ${ancestry.colour.bottom} 100%);`;
 	$: displayAttack = addPlusIfPositve($card.attack);
 	$: displayPower = addPlusIfPositve($card.power);
 	$: displayMorale = addPlusIfPositve($card.morale);
-	$: displayCommand = addPlusIfPositve($card.morale);
+	$: displayCommand = addPlusIfPositve($card.command);
 
 	// $: console.log(ancestry);
 
@@ -122,9 +122,9 @@
 			</div>
 		</div>
 		<div class="symbols">
-			<img id="anc-img" src={iconMap[ancestry.icon].src} alt="" />
+			<img id="anc-img" src={iconMap[ancestry.icon]?.src ?? ''} alt="" />
 
-			<img id="type-img" src={$card.unitType.icon} alt="" />
+			<img id="type-img" src={unitType.icon} alt="" />
 		</div>
 		<div class="stars">
 			<img class:is-hidden={experience.starsNum < 1} id="star-0" src="icons/star.svg" alt="" />
@@ -148,36 +148,8 @@
 					{ancestry.name}
 				</span>
 				<span class:small={isUnitTypeSmall}>
-					{$card.unitType.name}
+					{unitType.displayName}
 				</span>
-				<!-- <input
-					class:small={isExperienceSmall}
-					name="exp"
-					type="text"
-					title="Experience"
-					value={experience.name}
-				/>
-				<input
-					class:small={isEquipmentSmall}
-					name="equip"
-					title="Equipment"
-					type="text"
-					value={equipment.name}
-				/>
-				<input
-					class:small={isAncestrySmall}
-					name="ancestry"
-					title="Ancestry"
-					type="text"
-					value={ancestry.name}
-				/>
-				<input
-					class:small={isUnitTypeSmall}
-					name="type"
-					title="Unit Type"
-					type="text"
-					value={$card.unitType.name}
-				/> -->
 			</div>
 		</div>
 		<div class="tier">
@@ -301,7 +273,6 @@
 	.num {
 		border: none;
 		font-size: xx-large;
-		width: 90%;
 		text-align: center;
 	}
 
@@ -442,10 +413,6 @@
 		position: absolute;
 		width: 100%;
 		z-index: 15;
-	}
-
-	.image-upload {
-		margin-left: 20px;
 	}
 
 	.symbols {

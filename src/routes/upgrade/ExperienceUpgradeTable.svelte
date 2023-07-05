@@ -11,6 +11,12 @@
 		experience: string;
 	};
 
+	let values: IExperienceValue[] = Object.keys(valueMap).map((key) => ({
+		...valueMap[key],
+		experience: $experienceMap[key].name,
+		key: key,
+	}));
+
 	const columns: { field: keyof IExperienceBonus | 'experience'; label: string }[] = [
 		{ field: 'experience', label: `${unitTypeName} Experience` },
 		{ field: 'attacksNo', label: 'Additional\nAttacks' },
@@ -20,11 +26,11 @@
 		{ field: 'command', label: 'Command' },
 	];
 
-	const values: IExperienceValue[] = Object.keys(valueMap).map((key) => ({
-		...valueMap[key],
-		experience: $experienceMap[key].name,
-		key: key,
-	}));
+	// const values: IExperienceValue[] = Object.keys(valueMap).map((key) => ({
+	// 	...valueMap[key],
+	// 	experience: $experienceMap[key].name,
+	// 	key: key,
+	// }));
 
 	const setValue = (expKey: string, field: keyof IExperienceBonus) => (e: Event) => {
 		const target = e.currentTarget as HTMLInputElement;

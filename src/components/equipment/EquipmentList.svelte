@@ -9,16 +9,31 @@
 	function handleAddNew() {
 		equipment.addNew();
 	}
+	$: console.log(equipment);
 </script>
 
 <ul>
-	{#each $equipment as equipment (equipment.id)}
+	{#each $equipment as equip (equip.id)}
 		<li>
 			<div class="hbox">
-				<TextInput label="Name:" bind:value={equipment.name} />
-				<DeleteItemButton id={equipment.id} on:delete={handleDelete} />
+				<TextInput label="Name:" bind:value={equip.name} />
+				<DeleteItemButton id={equip.id} on:delete={handleDelete} />
 			</div>
 		</li>
 	{/each}
 </ul>
 <button on:click={handleAddNew}>+ Add New</button>
+
+<style>
+	ul {
+		list-style-type: none;
+	}
+	li {
+		height: 40px;
+	}
+	.hbox {
+		display: flex;
+		gap: 5px;
+		align-items: center;
+	}
+</style>
