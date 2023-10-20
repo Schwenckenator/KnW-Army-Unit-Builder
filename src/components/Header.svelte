@@ -1,11 +1,15 @@
+<script lang="ts">
+	import { base } from "$app/paths";
+</script>
+
 <header>
-	<a href="/">Units</a>
-	<a href="/ancestries">Ancestries</a>
-	<a href="/experience">Experience</a>
-	<a href="/equipment">Equipment</a>
+	<a href="{base}/">Units</a>
+	<a href="{base}/ancestries">Ancestries</a>
+	<a href="{base}/experience">Experience</a>
+	<a href="{base}/equipment">Equipment</a>
 	<!-- <a href="/unit-types">Unit Types</a> -->
-	<a href="/upgrade">Upgrade Settings</a>
-	<a href="/data">Import / Export</a>
+	<a href="{base}/upgrade">Upgrade Settings</a>
+	<a href="{base}/data">Import / Export</a>
 </header>
 
 <style>
