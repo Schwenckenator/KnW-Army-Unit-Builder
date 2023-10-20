@@ -8,7 +8,7 @@
 	on:touchstart
 	style={dragDisabled ? 'cursor: grab' : 'cursor: grabbing'}
 >
-	<img src="/icons/internal/handle.svg" alt="drag handle" />
+	<img src="icons/internal/handle.svg" alt="drag" />
 </div>
 
 <style>
